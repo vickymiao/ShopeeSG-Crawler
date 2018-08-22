@@ -44,7 +44,7 @@ diclist = []
 # get category id
 
 def parse(response_cat):
-    data_list = json.loads(response_cat.read())['data']['category_list']
+    data_list = json.loads(response_cat.read().decode('utf-8'))['data']['category_list']
     for data in data_list:
         url_1.append(subcategory_list_url + str(data['catid']))
     return url_1
@@ -54,7 +54,7 @@ parse(response_cat)
 
 # get item id
 def parse_subcategory(response_sub):
-    data_list = json.loads(response_sub.read())['data']['category_list']
+    data_list = json.loads(response_sub.read().decode('utf-8'))['data']['category_list']
     for data in data_list:
         url_2.append(search_items + "&newest=0&match_id={}".format(data['catid']))
     return url_2
@@ -66,7 +66,7 @@ for i in url_1:
 
 # go to item page
 def parse_search(response_item):
-    data_list = json.loads(response_item.read())['items']
+    data_list = json.loads(response_item.read().decode('utf-8'))['items']
     if len(data_list) == 0:
         return
     for data in data_list:
@@ -80,7 +80,7 @@ for i in url_2:
 
 # get item info
 def parse_items(sub):
-    data_list = json.loads(sub.read())['item']
+    data_list = json.loads(sub.read().decode('utf-8'))['item']
     item = GoodsItem()
     item['itemid'] = data_list['itemid']
     item['shopid'] = data_list['shopid']
